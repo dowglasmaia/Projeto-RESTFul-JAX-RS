@@ -70,7 +70,7 @@ public class FuncionarioResource {
 	@Path("/funcionario")
 	@Produces(MediaType.APPLICATION_XML)
 	public Funcionario getFuncNome(@QueryParam("nome") String nome, @QueryParam("sobrenome") String sobrenome) {
-		
+
 		for (Object key : funcionarios.keySet()) {
 			Funcionario func = funcionarios.get(key);
 
@@ -82,12 +82,28 @@ public class FuncionarioResource {
 		return null;
 	}
 
-	/* Buscar Por Salario */
+	/* Buscar Por Salario - com valores de minimo e maximo como paramentros */
 	@GET
+	@Path("/salario")
 	@Produces(MediaType.APPLICATION_XML)
-	public Departamento getFuncionarioPorSalario() {
+	public Departamento getFuncionarioPorSalario(@DefaultValue("0") @MatrixParam("minimo") String minimo,
+			@DefaultValue("5000") @MatrixParam("maximo") String maximo) {
 
-		return null;
+		Double salMinimo = Double.parseDouble(minimo);
+		Double salMaximo = Double.parseDouble(maximo);
+
+		List<Funcionario> lista = new ArrayList<>();
+
+		for (Object key : funcionarios.keySet()) {
+			Funcionario func = funcionarios.get(key);
+
+			if (func.getSalario() >= salMinimo && func.getSalario() <= salMaximo) {
+				lista.add(func);
+			}
+		}
+
+		Departamento dep = new Departamento(lista);
+		return dep;
 	}
 
 	/* Novo Funcionario */
