@@ -26,7 +26,7 @@ public class FuncionarioResource {
 
 	}
 
-	/*Buscar Por Ativos*/
+	/* Buscar Por Ativos */
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
 	public Departamento getFuncionario(@DefaultValue("ativo") @QueryParam("status") String status) {
@@ -45,7 +45,7 @@ public class FuncionarioResource {
 		return departamento;
 	}
 
-	/*Buscar Por inativos*/
+	/* Buscar Por inativos */
 	@GET
 	@Path("/inativos")
 	@Produces(MediaType.APPLICATION_XML)
@@ -64,21 +64,36 @@ public class FuncionarioResource {
 		return departamento;
 
 	}
-	
-	/*Buscar Por Salario*/
+
+	// bucsar por nome
+	@GET
+	@Path("/funcionario")
+	@Produces(MediaType.APPLICATION_XML)
+	public Funcionario getFuncNome(@QueryParam("nome") String nome, @QueryParam("sobrenome") String sobrenome) {
+		
+		for (Object key : funcionarios.keySet()) {
+			Funcionario func = funcionarios.get(key);
+
+			if (func.getNome().equalsIgnoreCase(nome) && func.getSobrenome().equalsIgnoreCase(sobrenome)) {
+
+				return func;
+			}
+		}
+		return null;
+	}
+
+	/* Buscar Por Salario */
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
 	public Departamento getFuncionarioPorSalario() {
-		
-		
-		
-		return null;		
+
+		return null;
 	}
-	
-	/*Novo Funcionario*/
+
+	/* Novo Funcionario */
 	@POST
 	public void novoFuncionario() {
-		
+
 	}
 
 }
