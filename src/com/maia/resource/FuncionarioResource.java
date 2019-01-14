@@ -5,7 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.ws.rs.*;
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.GET;
+import javax.ws.rs.MatrixParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.maia.model.Departamento;
@@ -108,8 +114,25 @@ public class FuncionarioResource {
 
 	/* Novo Funcionario */
 	@POST
-	public void novoFuncionario() {
+	public void novoFuncionario(
+			@QueryParam("nome") String nome, 
+			@QueryParam("sobrenome") String sobrenome,
+			@QueryParam("salario") String salario, 
+			@QueryParam("status") String status) {
 
+		Double sal = Double.parseDouble(salario); // convert String em Double
+
+		Funcionario func = new Funcionario();
+		func.setId(id++);
+		func.setNome(nome);
+		func.setSobrenome(sobrenome);
+		func.setSalario(sal);
+		if (status.equals("A")) {
+			func.setStatus(Status.A);
+		} else {
+			func.setStatus(Status.I);
+		}
+		funcionarios.put(func.getId(), func);
 	}
 
 }
